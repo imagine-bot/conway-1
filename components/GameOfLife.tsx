@@ -30,6 +30,7 @@ const GameOfLife = () => {
   });
 
   const [running, setRunning] = useState(false);
+  const [zoom, setZoom] = useState(20);
 
   const runningRef = useRef(running);
   runningRef.current = running;
@@ -78,10 +79,12 @@ const GameOfLife = () => {
       >
         {running ? 'stop' : 'start'}
       </button>
+      <button onClick={() => setZoom(zoom + 5)}>Zoom In</button>
+      <button onClick={() => setZoom(zoom - 5)}>Zoom Out</button>
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: `repeat(${numCols}, 20px)`
+          gridTemplateColumns: `repeat(${numCols}, ${zoom}px)`
         }}
       >
         {grid.map((rows, i) =>
@@ -95,8 +98,8 @@ const GameOfLife = () => {
                 setGrid(newGrid);
               }}
               style={{
-                width: 20,
-                height: 20,
+                width: zoom,
+                height: zoom,
                 backgroundColor: grid[i][k] ? 'pink' : undefined,
                 border: 'solid 1px black'
               }}
